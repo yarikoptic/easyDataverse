@@ -1,0 +1,41 @@
+name: test-connect
+
+on: [push]
+
+jobs:
+  test_easydataverse:
+    name: Test Flexible-Connect
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone this repo
+        uses: actions/checkout@v3
+      - name: Clone Dataverse repo
+        uses: actions/checkout@v3
+        with:
+          repository: IQSS/dataverse
+          path: dataverse
+          ref: develop
+      - name: Start containers
+        run: |
+          docker compose \
+            -f .github/workflows/docker/docker-compose-dataverse.yml \
+            --env-file .github/workflows/envs/.env.dataverse \
+            up -d
+      - name: Check Dataverse Setup
+        uses: emilioschepis/wait-for-endpoint@v1.0.3
+        with:
+          url: http://localhost:8080/api/info/version
+          timeout: 120000
+          interval: 10000
+      - name: Test metadatablocks
+        uses: emilioschepis/wait-for-endpoint@v1.0.3
+        with:
+          url: http://localhost:8080/api/metadatablocks
+          timeout: 120000
+          interval: 10000
+      - name: Stop containers
+        if: always()
+        run: |
+          docker compose \
+            -f docker-compose-alpha.yml \
+            --env-file .env.alpha down
