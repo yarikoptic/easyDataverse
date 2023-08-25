@@ -37,5 +37,6 @@ jobs:
         if: always()
         run: |
           docker compose \
-            -f docker-compose-alpha.yml \
-            --env-file .env.alpha down
+            -f .github/workflows/docker/docker-compose-dataverse.yml \
+            --env-file .github/workflows/envs/.env.dataverse \
+            down
