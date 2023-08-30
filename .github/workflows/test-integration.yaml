@@ -9,6 +9,7 @@ jobs:
     env:
       SERVER_URL: http://localhost:8080
       BUILTIN_USERS_KEY: ${{secrets.BUILTIN_USERS_KEY}}
+      USER_PW: ThisIsATest2023!
     steps:
 
       # Set up and test Dataverse instance
@@ -20,11 +21,6 @@ jobs:
           repository: IQSS/dataverse
           path: dataverse
           ref: develop
-      - name: Retrieve API Token
-        run: |
-          python3 .github/workflows/scripts/get_api_token.py \
-            --server-url ${{env.SERVER_URL}} \
-            --json-path .github/workflows/assets/user.json \
       - name: Start containers
         run: |
           docker compose \
@@ -43,7 +39,11 @@ jobs:
           url: ${{env.SERVER_URL}}/api/metadatablocks
           timeout: 120000
           interval: 10000
-
+      - name: Retrieve API Token
+        run: |
+          curl -d @.github/workflows/assets/user.json \
+               -H "Content-type:application/json" \
+               "$SERVER_URL/api/builtin-users?password=$USER_PW&key=$BUILTIN_USERS_KEY" \
       # Post integration test cleanup
       - name: Stop containers
         if: always()

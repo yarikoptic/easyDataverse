@@ -10,10 +10,9 @@ def main(server_url: str, user_json: Dict) -> None:
     """Creates a builtin user on the server and adds the API Token to the environment variables."""
 
     BUILTIN_USERS_KEY = os.environ["BUILTIN_USERS_KEY"]
-    NEWUSER_PASSWORD = 'SDm!>,"-ek/OKeA9'
+    NEWUSER_PASSWORD = "ThisIsATest2023!"
 
     url = f"{server_url}/api/builtin-users?password={NEWUSER_PASSWORD}&key={BUILTIN_USERS_KEY}"
-    print(url)
     response = requests.get(
         url,
         json=user_json,
