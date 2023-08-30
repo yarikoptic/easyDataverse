@@ -19,6 +19,8 @@ def main(server_url: str, user_json: Dict) -> None:
         headers={"Content-Type": "application/json"},
     )
 
+    print(response.text)
+
     if response.status_code != 200:
         raise Exception(f"Failed to create builtin user: {response.text}")
 

@@ -38,6 +38,9 @@ jobs:
           url: ${{env.SERVER_URL}}/api/metadatablocks
           timeout: 120000
           interval: 10000
+      - name: Echo Metadatablocks
+        run: |
+          curl -X GET ${{env.SERVER_URL}}/api/metadatablocks
       - name: Retrieve API Token
         run: |
           python3 .github/workflows/scripts/get_api_token.py \
