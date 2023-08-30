@@ -10,7 +10,8 @@ curl -d @.github/workflows/assets/user.json \
     "$SERVER_URL/api/builtin-users?password=$NEWUSER_PASSWORD&key=$BUILTIN_USERS_KEY" \
     && echo "Created user"
 
-# Retrieve the API Token
+# Retrieve the API Token and put into env variable
 USER_DATA=$(cat ./user_data.json)
+export TEST_API_TOKEN=$($USER_DATA | jq -r '.data.apiToken')
 
-echo $USER_DATA | jq -r '.data.apiToken'
+echo "API Token: $TEST_API_TOKEN"
