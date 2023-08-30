@@ -11,4 +11,4 @@ USER_DATA=$( \
 )
 
 # Print the API Token
-echo $(jq -r '.apiToken' <<< "$USER_DATA")
+echo $(jq -r '.apiToken' <<< $USER_DATA)
