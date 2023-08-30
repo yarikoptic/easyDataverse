@@ -24,7 +24,7 @@ def _set_builtin_users_key(server_url: str, builtin_users_key: str) -> None:
     if response.status_code != 200:
         raise Exception(f"Failed to set builtin users key: {response.text}")
 
-    print("ADDED BUILDIN USERS KEY")
+    print(f"ADDED BUILT-IN USERS KEY:\n\n {json.dumps(response.json(), indent=2)}")
 
 
 def _create_builtin_user(
@@ -52,8 +52,12 @@ def _create_builtin_user(
         headers={"Content-Type": "application/json"},
     )
 
+    print(response.json())
+
     if response.status_code != 200:
-        raise Exception(f"Failed to create builtin user: {response.text}")
+        raise Exception(
+            f"Failed to create builtin user:\n\n {json.dumps(response.json(), indent=2)}"
+        )
 
     return response.json()
 
