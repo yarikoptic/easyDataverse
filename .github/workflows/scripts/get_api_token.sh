@@ -13,5 +13,4 @@ curl -d @.github/workflows/assets/user.json \
 # Retrieve the API Token
 USER_DATA=$(cat ./user_data.json)
 
-echo $USER_DATA
-echo $USER_DATA | jq -r '.apiToken'
+echo $USER_DATA | jq -r '.data.apiToken'
