@@ -20,6 +20,11 @@ jobs:
           repository: IQSS/dataverse
           path: dataverse
           ref: develop
+      - name: Retrieve API Token
+        run: |
+          python3 .github/workflows/scripts/get_api_token.py \
+            --server-url ${{env.SERVER_URL}} \
+            --json-path .github/workflows/assets/user.json \
       - name: Start containers
         run: |
           docker compose \
@@ -38,11 +43,6 @@ jobs:
           url: ${{env.SERVER_URL}}/api/metadatablocks
           timeout: 120000
           interval: 10000
-      - name: Retrieve API Token
-        run: |
-          python3 .github/workflows/scripts/get_api_token.py \
-            --server-url ${{env.SERVER_URL}} \
-            --json-path .github/workflows/assets/user.json \
 
       # Post integration test cleanup
       - name: Stop containers
