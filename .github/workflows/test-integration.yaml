@@ -45,8 +45,8 @@ jobs:
       - name: Create Test User
         run: |
           curl -d @.github/workflows/assets/user.json \
-               -H "Content-type:application/json"
-               "$SERVER_URL/api/builtin-users?password=$NEWUSER_PASSWORD&key=$BUILTIN_USERS_KEY"
+               -H "Content-type:application/json" \
+               "$SERVER_URL/api/builtin-users?password=$NEWUSER_PASSWORD&key=$BUILTIN_USERS_KEY" \
 
         
       # - name: Retrieve API Token
