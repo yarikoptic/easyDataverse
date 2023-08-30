@@ -10,4 +10,5 @@ USER_DATA = $( \
     "$SERVER_URL/api/builtin-users?password=$NEWUSER_PASSWORD&key=$BUILTIN_USERS_KEY"
 )
 
+# Print the API Token
 echo $(jq -r '.apiToken' <<< "$USER_DATA")
