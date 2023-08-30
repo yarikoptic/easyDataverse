@@ -9,6 +9,7 @@ jobs:
     env:
       SERVER_URL: http://localhost:8080
       BUILTIN_USERS_KEY: ${{secrets.BUILTIN_USERS_KEY}}
+      NEWUSER_PASSWORD: "ThisIsATest2023!*"
     steps:
 
       # Set up and test Dataverse instance
