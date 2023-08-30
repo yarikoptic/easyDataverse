@@ -10,7 +10,7 @@ def main(server_url: str, user_json: Dict) -> None:
     """Creates a builtin user on the server and adds the API Token to the environment variables."""
 
     BUILTIN_USERS_KEY = os.environ["BUILTIN_USERS_KEY"]
-    NEWUSER_PASSWORD = "Test123"
+    NEWUSER_PASSWORD = 'SDm!>,"-ek/OKeA9'
 
     url = f"{server_url}/api/builtin-users?password={NEWUSER_PASSWORD}&key={BUILTIN_USERS_KEY}"
     response = requests.get(
@@ -19,12 +19,8 @@ def main(server_url: str, user_json: Dict) -> None:
         headers={"Content-Type": "application/json"},
     )
 
-    print(user_json)
-
     if response.status_code != 200:
-        raise Exception(f"Failed to create builtin user: {response.json()}")
-
-    print(response.text)
+        raise Exception(f"Failed to create builtin user: {response.text}")
 
 
 if __name__ == "__main__":
