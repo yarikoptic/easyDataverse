@@ -24,20 +24,28 @@ def _set_builtin_users_key(server_url: str, builtin_users_key: str) -> None:
     if response.status_code != 200:
         raise Exception(f"Failed to set builtin users key: {response.text}")
 
+    print("ADDED BUILDIN USERS KEY")
 
-def _create_builtin_user(server_url: str, user_json: Dict, password: str) -> Dict:
+
+def _create_builtin_user(
+    server_url: str,
+    user_json: Dict,
+    password: str,
+    builtin_users_key: str,
+) -> Dict:
     """Creates a builtin user on the server.
 
     Args:
         server_url (str): Dataverse server url
         user_json (Dict): Payload for creating a builtin user
         password (str): Password for the new user
+        builtin_users_key (str): The builtin users key
 
     Returns:
         Dict: Payload containing the new user's API Token
     """
 
-    url = f"{server_url}/api/builtin-users?password={password}"
+    url = f"{server_url}/api/builtin-users?password={password}&key={builtin_users_key}"
     response = requests.get(
         url,
         json=user_json,
@@ -70,6 +78,7 @@ def main(server_url: str, user_json: Dict) -> None:
         server_url=server_url,
         user_json=user_json,
         password=NEWUSER_PASSWORD,
+        builtin_users_key=BUILTIN_USERS_KEY,
     )
 
     print(user_data.keys())
