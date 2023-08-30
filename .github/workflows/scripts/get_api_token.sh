@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the builtin user key
-curl -X PUT -d $BUILTIN_USERS_KEY $SERVER_URL/api/admin/settings/BuiltinUsers.KEY &&
+curl -X PUT -d $BUILTIN_USERS_KEY $SERVER_URL/api/admin/settings/BuiltinUsers.KEY && echo "Added BuiltinUsers.KEY"
 
 # Create a user and receive the API Token
 USER_DATA=$( \
