@@ -6,13 +6,38 @@ from typing import Dict
 import requests
 
 
-def main(server_url: str, user_json: Dict) -> None:
-    """Creates a builtin user on the server and adds the API Token to the environment variables."""
+def _set_builtin_users_key(server_url: str, builtin_users_key: str) -> None:
+    """Sets the builtin users key on the server.
 
-    BUILTIN_USERS_KEY = os.environ["BUILTIN_USERS_KEY"]
-    NEWUSER_PASSWORD = "ThisIsATest2023!"
+    Args:
+        server_url (str): Dataverse server url
+        builtin_users_key (str): The builtin users key
+    """
 
-    url = f"{server_url}/api/builtin-users?password={NEWUSER_PASSWORD}&key={BUILTIN_USERS_KEY}"
+    url = f"{server_url}/api/admin/settings/BuiltinUsers.KEY"
+    response = requests.put(
+        url,
+        data=builtin_users_key,
+        headers={"Content-Type": "text/plain"},
+    )
+
+    if response.status_code != 200:
+        raise Exception(f"Failed to set builtin users key: {response.text}")
+
+
+def _create_builtin_user(server_url: str, user_json: Dict, password: str) -> Dict:
+    """Creates a builtin user on the server.
+
+    Args:
+        server_url (str): Dataverse server url
+        user_json (Dict): Payload for creating a builtin user
+        password (str): Password for the new user
+
+    Returns:
+        Dict: Payload containing the new user's API Token
+    """
+
+    url = f"{server_url}/api/builtin-users?password={password}"
     response = requests.get(
         url,
         json=user_json,
@@ -22,7 +47,32 @@ def main(server_url: str, user_json: Dict) -> None:
     if response.status_code != 200:
         raise Exception(f"Failed to create builtin user: {response.text}")
 
-    print(response.json())
+    return response.json()
+
+
+def main(server_url: str, user_json: Dict) -> None:
+    """Creates a builtin user on the server and adds the API Token to the environment variables.
+
+    Args:
+        server_url (str): DataVerse server url
+        user_json (Dict): Payload for creating a builtin user
+    """
+
+    BUILTIN_USERS_KEY = os.environ["BUILTIN_USERS_KEY"]
+    NEWUSER_PASSWORD = "ThisIsATest2023!"
+
+    _set_builtin_users_key(
+        server_url=server_url,
+        builtin_users_key=BUILTIN_USERS_KEY,
+    )
+
+    user_data = _create_builtin_user(
+        server_url=server_url,
+        user_json=user_json,
+        password=NEWUSER_PASSWORD,
+    )
+
+    print(user_data.keys())
 
 
 if __name__ == "__main__":
