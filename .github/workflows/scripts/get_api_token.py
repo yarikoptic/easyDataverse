@@ -13,13 +13,12 @@ def main(server_url: str, user_json: Dict) -> None:
     NEWUSER_PASSWORD = 'SDm!>,"-ek/OKeA9'
 
     url = f"{server_url}/api/builtin-users?password={NEWUSER_PASSWORD}&key={BUILTIN_USERS_KEY}"
+    print(url)
     response = requests.get(
         url,
         json=user_json,
         headers={"Content-Type": "application/json"},
     )
-
-    print(url)
 
     if response.status_code != 200:
         raise Exception(f"Failed to create builtin user: {response.text}")
