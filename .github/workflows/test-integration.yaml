@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVER_URL: http://localhost:8080
+      BUILTIN_USERS_KEY: ${{secrets.BUILTIN_USERS_KEY}}
     steps:
 
       # Set up and test Dataverse instance
@@ -42,8 +43,6 @@ jobs:
           python3 .github/workflows/scripts/get_api_token.py \
             --server_url ${{env.SERVER_URL}} \
             --json-path .github/workflows/assets/user.json \
-        with:
-          BUILTIN_USERS_KEY: ${{secrets.BUILTIN_USERS_KEY}}
 
       # Post integration test cleanup
       - name: Stop containers
