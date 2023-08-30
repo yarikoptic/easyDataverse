@@ -11,6 +11,8 @@ jobs:
     steps:
 
       # Set up and test Dataverse instance
+      - name: Clone EasyDataverse Repo
+        uses: actions/checkout@v3
       - name: Clone Dataverse Repo
         uses: actions/checkout@v3
         with:
@@ -40,11 +42,6 @@ jobs:
           python3 .github/workflows/scripts/get_api_token.py \
             --server_url ${{env.SERVER_URL}} \
             --json-path .github/workflows/assets/user.json \
-
-      # EasyDataverse steps
-      - name: Clone EasyDataverse Repo
-        uses: actions/checkout@v3
-
 
       # Post integration test cleanup
       - name: Stop containers
