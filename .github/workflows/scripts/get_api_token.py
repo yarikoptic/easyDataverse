@@ -22,6 +22,8 @@ def main(server_url: str, user_json: Dict) -> None:
     if response.status_code != 200:
         raise Exception(f"Failed to create builtin user: {response.text}")
 
+    print(response.json())
+
 
 if __name__ == "__main__":
     # Get the server url from the command line
