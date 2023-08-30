@@ -19,10 +19,10 @@ def main(server_url: str, user_json: Dict) -> None:
         headers={"Content-Type": "application/json"},
     )
 
-    print(response.text)
+    print(user_json)
 
     if response.status_code != 200:
-        raise Exception(f"Failed to create builtin user: {response.text}")
+        raise Exception(f"Failed to create builtin user: {response.json()}")
 
     print(response.text)
 
@@ -30,7 +30,7 @@ def main(server_url: str, user_json: Dict) -> None:
 if __name__ == "__main__":
     # Get the server url from the command line
     parser = argparse.ArgumentParser()
-    parser.add_argument("--server_url")
+    parser.add_argument("--server-url")
     parser.add_argument("--json-path")
     args = parser.parse_args()
 
