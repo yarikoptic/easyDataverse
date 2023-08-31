@@ -42,7 +42,7 @@ jobs:
       - name: Add API Token to Env
         run: bash .github/workflows/scripts/get_api_token.sh
       - name: Check API Token
-        run: echo $TEST_API_TOKEN
+        run: echo $API_TOKEN
 
       # Post integration test cleanup
       - name: Stop containers
