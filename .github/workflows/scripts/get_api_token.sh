@@ -12,6 +12,4 @@ curl -d @.github/workflows/assets/user.json \
 
 # Retrieve the API Token and put into env variable
 USER_DATA=$(cat ./user_data.json)
-export TEST_API_TOKEN=$(echo $USER_DATA | jq -r '.data.apiToken')
-
 echo "API_TOKEN=$(echo $USER_DATA | jq -r '.data.apiToken')" >> $GITHUB_ENV
